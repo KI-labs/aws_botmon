@@ -9,12 +9,28 @@ class Actions:
         self.user_info = user_info
         self.slackhelper = slackhelper
 
-    def notify_channel(self):
-        while True:
-            print(datetime.now())
+    def get_instances_details(self):
+        aws_operations = AWSHelper()
+        return aws_operations
 
-            aws_operations = AWSHelper()
-            print("aws_operations", aws_operations.result)
+    def notify_user(self):
+        email = self.user_info['user']['profile']['email']
+        recipient = self.user_info['user']['id']
+
+        aws_operations = self.get_instances_details()
+        instances = aws_operations.result
+        print("instances", instances)
+        self.slackhelper.post_message(instances, recipient)
+
+    def notify_channel(self):
+        # while True:
+        print(datetime.now())
+
+        aws_operations = self.get_instances_details()
+        instances = aws_operations.result
+        print("instances", instances)
+        self.slackhelper.post_message_to_channel(instances)
+
 
             # curent_time = datetime.now()
             # current_hour = curent_time.hour
@@ -47,5 +63,5 @@ class Actions:
             #             row['Most Recent Learning Experience you\'d like to write about'])
             #         self.slackhelper.post_message_to_channel(text_detail)
             # time.sleep(sleep_time * 3600)
-            time.sleep(2)
+            # time.sleep(2)
 

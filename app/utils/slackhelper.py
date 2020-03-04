@@ -8,35 +8,39 @@ class SlackHelper:
         self.slack_token = get_env('SLACK_TOKEN')
         self.slack_client = SlackClient(self.slack_token)
         self.slack_channel = get_env('SLACK_CHANNEL')
+        self.text = "EC2 Instances currently running:"
 
-    def post_message(self, msg, recipient):
+    def post_message(self, attachments, recipient):
         return self.slack_client.api_call(
             "chat.postMessage",
             channel=recipient,
-            text=msg,
+            text=self.text,
+            attachments=attachments,
             as_user=True
         )
 
-    def post_message_to_channel(self, msg):
+    def post_message_to_channel(self):
+        print("slack_token", self.slack_token)
         return self.slack_client.api_call(
             "chat.postMessage",
             channel=self.slack_channel,
-            text=msg,
+            text=self.text,
             username='botmon',
+            # attachments=attachments,
             parse='full',
-            as_user=False
+            as_user=False,
         )
 
-    def file_upload(self, file_content, file_name, file_type, title=None, ):
-        return self.slack_client.api_call(
-            "files.upload",
-            channels=self.slack_channel,
-            content=file_content,
-            filename=file_name,
-            filetype=file_type,
-            initial_comment='{} Log File'.format(file_name),
-            title=title
-        )
+    # def file_upload(self, file_content, file_name, file_type, title=None, ):
+    #     return self.slack_client.api_call(
+    #         "files.upload",
+    #         channels=self.slack_channel,
+    #         content=file_content,
+    #         filename=file_name,
+    #         filetype=file_type,
+    #         initial_comment='{} Log File'.format(file_name),
+    #         title=title
+    #     )
 
     def user_info(self, uid):
         return self.slack_client.api_call(

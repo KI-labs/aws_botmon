@@ -1,4 +1,4 @@
-from app.utils.pgclienthelper import DBHelper
+from app.utils.slackhelper import SlackHelper
 
-client = DBHelper()
-
+slack = SlackHelper()
+slack.post_message_to_channel()
