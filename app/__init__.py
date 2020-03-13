@@ -27,24 +27,32 @@ def create_app(config_name):
 
     @app.route('/botmon', methods=['POST'])
     def botmon():
+        print("Botmon at your service")
         command_text = request.data.get('text')
         command_text = command_text.split(' ')
         slack_uid = request.data.get('user_id')
-        slackhelper = SlackHelper()
-        slack_user_info = slackhelper.user_info(slack_uid)
+        slack_channel = request.data.get('channel_name')
+
+        if slack_channel == "directmessage":
+            slack_channel = slack_uid
+
+        slackhelper = SlackHelper(user_id=slack_uid, slack_channel=slack_channel)
+
+        slack_user_info = slackhelper.set_user_info()
         actions = Actions(slackhelper, slack_user_info)
 
         if command_text[0] not in allowed_commands:
             response_body = {'text': 'Invalid Command Sent - `/botmon help` for available commands'}
 
         if command_text[0] == 'help':
+
             response_body = actions.help()
 
         if command_text[0] in ['instances', 'inst', 'machines']:
-            response_body = actions.notify_user()
+            response_body = actions.notify_channel()
 
         response = jsonify(response_body)
         response.status_code = 200
-        return response
+        return "You can checkout the list of currently running EC2 instances in your direct message from aws_botmon bot"
 
     return app
