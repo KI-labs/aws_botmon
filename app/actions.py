@@ -1,7 +1,6 @@
 import time
 import json
-from datetime import datetime, date, timedelta
-from config import get_env
+from datetime import datetime
 from app.utils.awshelper import AWSHelper
 from constants import backticks, instance_title, summary_title, single_border_unbroken, new_line, region, instances_running_per_region, instance_id, instance_name, instance_type, status, INSTANCES_PATH, SUMMARY_PATH
 
@@ -14,19 +13,6 @@ class Actions:
     def get_instances_details(self):
         aws_operations = AWSHelper()
         return aws_operations
-
-    def notify_user(self):
-        pass
-        # print("USER_INFO", self.user_info)
-        # email = self.user_info['user']['profile']['email']
-        # recipient = self.user_info['user']['id']
-        #
-        # aws_operations = self.get_instances_details()
-        # instances = aws_operations.result
-        # print("instances", instances)
-        # print("blocks", blocks)
-        # response = self.slackhelper.post_ephemeral_message_to_channel(blocks)
-        # return response
 
     @staticmethod
     def build_blocks(instances_list, summary_list):

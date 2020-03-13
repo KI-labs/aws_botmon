@@ -10,7 +10,6 @@ sched_bod = BlockingScheduler()
 
 
 def write_into_file(data_list, save_path):
-    print("inside write into file" + save_path)
     with open(save_path, "w") as f:
         json.dump(data_list, f, indent=0)
 
@@ -20,8 +19,6 @@ def perform_aws_operations():
     # Get AWS instances list
     aws_operations = AWSHelper()
     instances_list, instances_summary = aws_operations.result
-    print("aws_instances", instances_list)
-    print("instances_summary", instances_summary)
 
     write_into_file(instances_list, INSTANCES_PATH)
     write_into_file(instances_summary, SUMMARY_PATH)
@@ -31,7 +28,6 @@ def perform_aws_operations():
 def send_bod_messages_to_slack():
     slackhelper = SlackHelper()
     actions = Actions(slackhelper)
-    print("Before calling notify_channel")
     actions.notify_channel()
 
 sched_aws.start()

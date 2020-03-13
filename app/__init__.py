@@ -3,7 +3,6 @@ from config.env import app_env
 from app.utils.slackhelper import SlackHelper
 from flask import request, jsonify
 from app.actions import Actions
-from re import match
 
 '''
 /botmon instances
