@@ -20,9 +20,20 @@ def create_app(config_name):
     app.config.from_object(app_env[config_name])
     app.config.from_pyfile('../config/env.py')
 
+    def shutdown_server():
+        func = request.environ.get('werkzeug.server.shutdown')
+        if func is None:
+            raise RuntimeError('Not running with the Werkzeug Server')
+        func()
+
     @app.route("/")
     def hello():
         return "Hello World!"
+
+    @app.route('/shutdown', methods=['POST'])
+    def shutdown():
+        shutdown_server()
+        return 'Server shutting down...'
 
     @app.route('/botmon', methods=['POST'])
     def botmon():
