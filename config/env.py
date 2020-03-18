@@ -26,8 +26,8 @@ class StagingEnv(EnvConfig):
 
 class ProductionEnv(EnvConfig):
     """Configurations for Production."""
-    DEBUG = False
-    TESTING = False
+    DEBUG = True
+    TESTING = True
 
 
 app_env = {

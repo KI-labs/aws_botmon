@@ -24,7 +24,9 @@ class SlackHelper:
         )
 
     def post_message_to_channel(self, blocks):
+        print("blocks:", blocks)
         print("slack_token", self.slack_token)
+        print("slack_channel", self.slack_channel)
         print("Before posting message to channel")
         return self.slack_client.api_call(
             "chat.postMessage",

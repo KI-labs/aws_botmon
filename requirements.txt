@@ -3,3 +3,4 @@ Flask==1.0.2
 Flask-API==1.0
 slackclient==1.2.1
 APScheduler==3.6.3
+awscli==1.18.23
