@@ -63,6 +63,6 @@ def create_app(config_name):
 
         response = jsonify(response_body)
         response.status_code = 200
-        return "You can checkout the list of currently running EC2 instances in your direct message from aws_botmon bot"
+        return "You can checkout the list of currently running EC2 instances in your direct message from awsinstancesmonitor app or the aws_monitor channel"
 
     return app
