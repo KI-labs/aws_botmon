@@ -1,6 +1,6 @@
 import subprocess as sp
 import json
-
+from constants import HOME
 
 class AWSHelper:
 
@@ -24,13 +24,13 @@ class AWSHelper:
 
     def __find_reservations_for_regions(self):
         for region in self.regions:
-            log_file_path = f"/home/ec2-user/aws_botmon/aws_botmon/{region}_instances.json"
+            log_file_path = f"{HOME}/{region}_instances.json"
             sp.call("aws ec2 describe-instances --region {} > {}".format(region, log_file_path), shell=True)
             data = json.load(open(log_file_path))
             reservations = data["Reservations"]
             if reservations:
                 reservations_in_regions = {region: reservations}
-                self.reservations_slack_tokenin_regions.append(reservations_in_regions)
+                self.reservations_in_regions.append(reservations_in_regions)
 
     def __find_running_ec2_instances(self):
         for each in self.reservations_in_regions:
